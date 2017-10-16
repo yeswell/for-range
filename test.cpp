@@ -1,104 +1,122 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <cmath>
 
 #include "test.h"
 #include "for_range.h"
 
 
 
-void test()
+void test(int m, int n)
 {
-    int begin, end, sum, M, N;
-    double t, t_u_mean, t_r_mean;
+    double t_r, t_u;
 
-    srand( time(NULL) );
+    cout << "Test start." << endl;
+    cout << endl;
 
-    M = 1e+6;
-    N = 1e+3;
+    cout << "The test considers the ratio of time spent on a service operation" << endl;
+    cout << "in a loop using range(a, b, step) to time in the usually cycle." << endl;
+    cout << "Vars time_r and time_u is a service time (in milliseconds) for one" << endl;
+    cout << "iteration of the loop using the range(a, b, step) and the usually cycle." <<endl;
+    cout << "Var x is the ratio of the time_r to the time_u." << endl;
+    cout << endl;
 
-    t_u_mean = t_r_mean = 0;
+    cout << "The average values are calculated on 10^m starts." << endl;
+    cout << "Number of iterations in each loop is 10^n." << endl;
+    cout << endl;
 
-    for ( auto i: range(1, M) )
+    cout << "(m, n): x = time_r / time_u" << endl;
+    cout << "---------------------------" << endl;
+
+    for (auto i: range(1, m))
     {
-        begin = rand() % M;
-        end = begin + N;
-
-        t = test_usual_for(begin, end, 1, &sum);
-        t_u_mean += (t - t_u_mean) / i;
-
-        t = test_range_for(begin, end, 1, &sum);
-        t_r_mean += (t - t_r_mean) / i;
+        for (auto j: range(1, n))
+        {
+            cout << "(" << i << ", " << j << "): ";
+            cout << work_time_ratio(pow(10, i), pow(10, j), &t_r, &t_u) << " = ";
+            cout << t_r << " / ";
+            cout << t_u << endl;
+        }
     }
 
     cout << endl;
-    cout << "The average time of execution of the usual FOR: " << (t_u_mean / M) << " seconds" << endl;
-    cout << "The average time of execution of the range FOR: " << (t_r_mean / M) << " seconds" << endl;
-    cout << endl;
+    cout << "Test end." << endl;
+}
+
+
+double work_time_ratio(int M, int N, double * t_r_mean, double * t_u_mean)
+{
+    int begin, end, sum;
+
+    *t_r_mean = *t_u_mean = 0;
+
+    srand( time(NULL) );
+
+    for ( auto i: range(1, M) )
+    {
+        begin = (i + rand()) % M;
+        end = begin + N;
+
+        double t = time_for_sum(begin, end, 1, &sum);
+
+        *t_r_mean += time_range_for(begin, end, 1, &sum) - t;
+        *t_u_mean += time_usual_for(begin, end, 1, &sum) - t;
+    }
+
+    *t_r_mean /= M;
+    *t_u_mean /= M;
+
+    return ( *t_r_mean / *t_u_mean );
 }
 
 double time_for_sum(int begin, int end, int step, int * ret)
 {
-    long long sum, clocks;
+    long long clocks = 0;
     clock_t clk_1, clk_2;
 
-    sum = 0;
-    clocks = 0;
+    *ret = 0;
 
     for ( auto i : range(begin, end, step) )
     {
         clk_1 = clock();
-        sum += i;
+        *ret += i;
         clk_2 = clock();
 
         clocks += (clk_2 - clk_1);
     }
 
-    *ret = sum;
-
     return ( clocks / CLOCKS_PER_SEC );
 }
 
-double test_usual_for(int begin, int end, int step, int * ret)
+double time_usual_for(int begin, int end, int step, int * ret)
 {
-    long long sum;
-    double t_for_sum;
     clock_t clk_1, clk_2;
 
-    sum = 0;
+    *ret = 0;
 
     clk_1 = clock();
     for ( auto i = begin; i <= end; i += step )
     {
-        sum += i;
+        *ret += i;
     }
     clk_2 = clock();
 
-    t_for_sum = time_for_sum(begin, end, step, ret);
-
-    *ret = sum;
-
-    return ( (double(clk_2 - clk_1) / CLOCKS_PER_SEC) - t_for_sum );
+    return ( double(clk_2 - clk_1) / CLOCKS_PER_SEC );
 }
 
-double test_range_for(int begin, int end, int step, int * ret)
+double time_range_for(int begin, int end, int step, int * ret)
 {
-    long long sum;
-    double t_for_sum;
     clock_t clk_1, clk_2;
 
-    sum = 0;
+    *ret = 0;
 
     clk_1 = clock();
     for ( auto i : range(begin, end, step) )
     {
-        sum += i;
+        *ret += i;
     }
     clk_2 = clock();
 
-    t_for_sum = time_for_sum(begin, end, step, ret);
-
-    *ret = sum;
-
-    return ( (double(clk_2 - clk_1) / CLOCKS_PER_SEC) - t_for_sum );
+    return ( double(clk_2 - clk_1) / CLOCKS_PER_SEC );
 }
