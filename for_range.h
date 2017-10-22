@@ -7,38 +7,45 @@
 
 
 
-using namespace std;
-
-
-
-class range : public iterator <forward_iterator_tag, long long>
+class range : public std::iterator <std::forward_iterator_tag, long long>
 {
-
     private:
 
-        long long i_current, i_end, i_step;
+        long long i_curr, i_end, i_step;
+
+        inline void init()
+        {
+            long long diff = i_curr - i_end;
+
+            if ( (i_step != 0) and (((i_step ^ diff) < 0) or (diff == 0)) )
+            {
+                i_end += i_step + (diff % i_step);
+            }
+            else
+            {
+                i_curr = i_end = i_step = 0;
+            }
+        }
 
 
 
     public:
 
-        range(long long begin, long long end, long long step = 1)
-        {
-            i_current = begin;
-            i_end     = end;
-            i_step    = step;
-        }
+        range(long long begin, long long end, long long step)
+            : i_curr(begin), i_end(end), i_step(step)
+        {}
 
-        range(const range & iter)
-        {
-            i_current = iter.i_current;
-            i_end     = iter.i_end;
-            i_step    = iter.i_step;
-        }
+        range(long long begin, long long end)
+            : range(begin, end, 1)
+        {}
+
+        range(long long N)
+            : range(1, N, 1)
+        {}
 
         range begin()
         {
-            return range(i_current, 0, i_step);
+            return init(), range(i_curr, 0, i_step);
         }
 
         range end()
@@ -48,31 +55,17 @@ class range : public iterator <forward_iterator_tag, long long>
 
         range & operator ++ ()
         {
-            i_current += i_step;
-
-            return *this;
+            return (i_curr += i_step), *this;
         }
 
         bool operator != (const range & iter)
         {
-            if ( i_step == 0 )
-            {
-                return false;
-            };
-
-            if ( i_step > 0 )
-            {
-                return ( i_current <= iter.i_current );
-            }
-            else
-            {
-                return ( i_current >= iter.i_current );
-            }
+            return (i_curr != iter.i_curr);
         }
 
         typename range::reference operator * ()
         {
-            return ( i_current );
+            return i_curr;
         }
 };
 
