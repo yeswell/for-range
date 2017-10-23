@@ -12,7 +12,7 @@ using namespace std;
 int main()
 {
     cout << "Example of use:" << endl;
-    for(auto i: range(1, 5))
+    for(auto i: range(5))
     {
         cout << i << ") Hello, World!" << endl;
     }

@@ -21,19 +21,18 @@ void time_test(int m, int n)
     cout << "in a loop using range(a, b, step) to time in the usually cycle." << endl;
     cout << "Vars 'time_r' and 'time_u' is a service time (in ticks) for one" << endl;
     cout << "iteration of the loop using range(a, b, step) and usually cycle." <<endl;
-    cout << "Var 'x' is the ratio of the 'time_r' to the 'time_u'." << endl;
     cout << endl;
 
     cout << "The average values are calculated on 1e+m starts." << endl;
     cout << "Number of iterations in each loop is 1e+n." << endl;
     cout << endl;
 
-    cout << "(m, n): x = time_r / time_u" << endl;
-    cout << "---------------------------" << endl;
+    cout << "(m, n): time_r / time_u" << endl;
+    cout << "-----------------------" << endl;
 
-    for (auto i: range(1, m))
+    for (auto i: range(m))
     {
-        for (auto j: range(1, n))
+        for (auto j: range(n))
         {
             cout << "(" << i << ", " << j << "): ";
             cout << work_time_ratio(pow(10, i), pow(10, j));
@@ -47,23 +46,23 @@ void time_test(int m, int n)
 
 double work_time_ratio(int M, int N)
 {
-    int begin, end, sum;
-    double t_r_mean = 0, t_u_mean = 0;
+    int sum = 0;
+    double time_r = 0, time_u = 0;
 
     auto seed = chrono::system_clock::now().time_since_epoch();
     auto gen  = default_random_engine( seed.count() );
     auto rand = uniform_int_distribution <int> (1, M);
 
-    for ( auto i: range(1, M) )
+    for (auto i: range(M))
     {
-        begin = i + rand(gen);
-        end   = N + begin;
+        int begin = i + rand(gen);
+        int end   = N + begin;
 
-        t_r_mean += time_range_for(begin, end, 1, &sum);
-        t_u_mean += time_usual_for(begin, end, 1, &sum);
+        time_r += time_range_for(begin, end, 1, &sum);
+        time_u += time_usual_for(begin, end, 1, &sum);
     }
 
-    return ( t_r_mean / t_u_mean );
+    return ( time_r / time_u );
 }
 
 double time_usual_for(int begin, int end, int step, int * ret)
