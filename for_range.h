@@ -69,6 +69,15 @@ class range : public std::iterator <std::forward_iterator_tag, long long>
         }
 };
 
+class range_z : public range
+{
+    public:
+
+        range_z(long long N)
+            : range(0, N - 1)
+        {}
+};
+
 
 
 #endif // FOR_RANGE_H
