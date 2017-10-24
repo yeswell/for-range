@@ -10,36 +10,46 @@
 Examples of usage
 
 ```cpp
-for (auto i: range(N))
+for (auto i: range(5))
 {
-    cout << i;
+    cout << i << " ";
 }
+
+// 1 2 3 4 5
 ```
 
 ```cpp
-for (auto i: range_z(N))
+for (auto i: range_z(5))
 {
-    cout << i;
+    cout << i << " ";
 }
+
+// 0 1 2 3 4
 ```
 
 ```cpp
-for (auto i: range(N, M))
+for (auto i: range(3, 7))
 {
-    cout << i;
+    cout << i << " ";
 }
+
+// 3 4 5 6 7
 ```
 
 ```cpp
-for (auto i: range(N, M, step))
+for (auto i: range(2, 9, 3))
 {
-    cout << i;
+    cout << i << " ";
 }
+
+// 2 5 8
 ```
 
 ```cpp
-for (auto i: range(M, N, -step))
+for (auto i: range(9, 2, -3))
 {
-    cout << i;
+    cout << i << " ";
 }
+
+// 9 6 3
 ```
