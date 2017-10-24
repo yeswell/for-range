@@ -39,6 +39,10 @@ for (auto i: range_z(5))
 </tr>
 </table>
 
+<table>
+<tr>
+<td>
+    
 ```cpp
 for (auto i: range(3, 7))
 {
@@ -48,20 +52,35 @@ for (auto i: range(3, 7))
 // 3 4 5 6 7
 ```
 
+</td>
+</tr>
+</table>
+    
+<table>
+<tr>
+<td>    
+    
 ```cpp
-for (auto i: range(2, 9, 3))
+for (auto i: range(0, 9, 2))
 {
     cout << i << " ";
 }
 
-// 2 5 8
+// 0 2 4 6 8
 ```
 
+</td>    
+<td>
+
 ```cpp
-for (auto i: range(9, 2, -3))
+for (auto i: range(9, 0, -2))
 {
     cout << i << " ";
 }
 
-// 9 6 3
+// 9 7 5 3 1
 ```
+
+</td>
+</tr>
+</table>
