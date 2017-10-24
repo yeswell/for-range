@@ -9,6 +9,11 @@
 
 Examples of usage
 
+
+<table>
+<tr>
+<td>
+    
 ```cpp
 for (auto i: range(5))
 {
@@ -18,6 +23,9 @@ for (auto i: range(5))
 // 1 2 3 4 5
 ```
 
+</td>    
+<td>
+    
 ```cpp
 for (auto i: range_z(5))
 {
@@ -26,6 +34,10 @@ for (auto i: range_z(5))
 
 // 0 1 2 3 4
 ```
+
+</td>
+</tr>
+</table>
 
 ```cpp
 for (auto i: range(3, 7))
