@@ -5,9 +5,9 @@ Simple and fast class, to use the range in the range-based loop.
 
 ---
 
-Examples of usage
+**Examples of usage**
 
-
+1. Use with one argument:
 <table>
 <tr>
 <td>
@@ -37,6 +37,8 @@ for (auto i: range_z(5))
 </tr>
 </table>
 
+2. Use with two arguments:
+
 <table>
 <tr>
 <td>
@@ -53,7 +55,9 @@ for (auto i: range(3, 7))
 </td>
 </tr>
 </table>
-    
+
+3. Use with three arguments:
+
 <table>
 <tr>
 <td>    
