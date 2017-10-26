@@ -6,10 +6,10 @@ Simple and fast class, to use the range in the range-based loop.
 **Contents:**
 1. [Examples of usage](#example)
 2. [Speed](#speed)
+#
+<a name="example"> **Examples of usage:** </a>
 
-<a name="example"> **Examples of usage** </a>
-
-1. Use with one argument:
+1. Use with one argument
 <table>
 <tr>
 <td>
@@ -39,7 +39,7 @@ for (auto i: range_z(5))
 </tr>
 </table>
 
-2. Use with two arguments:
+2. Use with two arguments
 
 <table>
 <tr>
@@ -58,7 +58,7 @@ for (auto i: range(3, 7))
 </tr>
 </table>
 
-3. Use with three arguments:
+3. Use with three arguments
 
 <table>
 <tr>
@@ -89,5 +89,7 @@ for (auto i: range(9, 0, -2))
 </tr>
 </table>
 
+#
+<a name="speed"> **Speed:** </a>
 
-<a name="speed"> **Speed** </a>
+Technical time for one iteration of the loop, just five percent more than an ordinary FOR loop.
