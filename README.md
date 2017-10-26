@@ -5,7 +5,7 @@ Simple and fast class, to use the range in the range-based loop.
 
 **Contents:**
 1. [Examples of usage](#example)
-2. [Speed](#speed)
+2. [Speed of work](#speed)
 #
 <a name="example"> **Examples of usage:** </a>
 
@@ -90,6 +90,6 @@ for (auto i: range(9, 0, -2))
 </table>
 
 #
-<a name="speed"> **Speed:** </a>
+<a name="speed"> **Speed of work:** </a>
 
 Technical time for one iteration of the loop, just five percent more than an ordinary FOR loop.
